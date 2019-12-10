@@ -3,7 +3,7 @@ package db
 import (
 	"database/sql"
 	"github.com/micro/go-micro/util/log"
-	"user-srv/basic/config"
+	"microservice-in-micro/basic/config"
 )
 
 func initMysql()  {

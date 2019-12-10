@@ -1,6 +1,6 @@
 package model
 
-import "user-srv/model/user"
+import "microservice-in-micro/user-srv/model/user"
 
 func Init()  {
 	user.Init()

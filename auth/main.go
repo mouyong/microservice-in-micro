@@ -7,12 +7,12 @@ import (
 	"github.com/micro/go-micro/registry"
 	"github.com/micro/go-micro/registry/etcd"
 	"github.com/micro/go-micro/util/log"
+	"microservice-in-micro/auth/handler"
+	"microservice-in-micro/auth/model"
 	"microservice-in-micro/basic"
 	"microservice-in-micro/basic/config"
-	"microservice-in-micro/user-srv/handler"
-	"microservice-in-micro/user-srv/model"
 
-	user "microservice-in-micro/user-srv/proto/user"
+	auth "microservice-in-micro/auth/proto/auth"
 )
 
 func main() {
@@ -22,19 +22,20 @@ func main() {
 
 	// New Service
 	service := micro.NewService(
-		micro.Name("mu.micro.book.srv.user"),
-		micro.Registry(micReg),
+		micro.Name("mu.micro.book.srv.auth"),
 		micro.Version("latest"),
+		micro.Registry(micReg),
 	)
 
 	// Initialise service
 	service.Init(micro.Action(func(c *cli.Context) {
 		model.Init()
+
 		handler.Init()
 	}))
 
 	// Register Handler
-	user.RegisterUserHandler(service.Server(), new(handler.User))
+	auth.RegisterServiceHandler(service.Server(), new(handler.Service))
 
 	// Run service
 	if err := service.Run(); err != nil {

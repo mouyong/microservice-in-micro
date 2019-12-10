@@ -7,11 +7,11 @@ import (
 	"github.com/micro/go-micro/registry/etcd"
 	"github.com/micro/go-micro/util/log"
 	"net/http"
-	"user-web/basic"
-	"user-web/basic/config"
+	"microservice-in-micro/basic"
+	"microservice-in-micro/basic/config"
 
 	"github.com/micro/go-micro/web"
-	"user-web/handler"
+	"microservice-in-micro/user-web/handler"
 )
 
 func main() {
@@ -39,7 +39,7 @@ func main() {
 
 	// register call handler
 	service.HandleFunc("/user/login", handler.Login)
-
+	service.HandleFunc("/user/logout", handler.Logout)
 	// run service
 	if err := service.Run(); err != nil {
 		log.Fatal(err)

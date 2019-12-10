@@ -3,8 +3,8 @@ package handler
 import (
 	"context"
 	"github.com/micro/go-micro/util/log"
-	s "user-srv/proto/user"
-	us "user-srv/model/user"
+	s "microservice-in-micro/user-srv/proto/user"
+	us "microservice-in-micro/user-srv/model/user"
 )
 
 var (

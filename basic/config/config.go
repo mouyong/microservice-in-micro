@@ -21,9 +21,10 @@ var (
 	profiles defaultProfiles
 	etcdConfig defaultEtcdConfig
 	mysqlConfig defaultMysqlConfig
+	jwtConfig defaultJwtConfig
+	redisConfig defaultRedisConfig
 	m sync.RWMutex
 	inited bool
-	sp = string(filepath.Separator)
 )
 
 func Init()  {
@@ -35,11 +36,11 @@ func Init()  {
 		return
 	}
 
-	appPath, _ := filepath.Abs(filepath.Dir(filepath.Join("."+sp, sp)))
+	appPath, _ := filepath.Abs(filepath.Dir(filepath.Join("./"+string(filepath.Separator))))
 	pt := filepath.Join(appPath, "conf")
 	os.Chdir(pt)
 
-	if err = config.Load(file.NewSource(file.WithPath(pt+sp+"application.yml"))); err != nil {
+	if err = config.Load(file.NewSource(file.WithPath(pt+"/application.yml"))); err != nil {
 		panic(err)
 	}
 
@@ -47,13 +48,13 @@ func Init()  {
 		panic(err)
 	}
 
-	log.Logf("[Init] 加载配置文件：path: %s, %+v\n", pt+sp+"application.yml", profiles)
+	log.Logf("[Init] 加载配置文件：path: %s, %+v\n", pt+"/application.yml", profiles)
 	if len(profiles.GetInclude()) > 0 {
 		include := strings.Split(profiles.GetInclude(), ",")
 
 		sources := make([]source.Source, len(include))
 		for i:=0; i<len(include); i++ {
-			filePath := pt+sp+defaultConfigFilePrefix+strings.TrimSpace(include[i])+".yml"
+			filePath := pt+ string(filepath.Separator) +defaultConfigFilePrefix+strings.TrimSpace(include[i])+".yml"
 
 			log.Logf("[Init] 加载配置文件：path: %s\n", filePath)
 
@@ -67,6 +68,8 @@ func Init()  {
 
 	config.Get(defaultRootPath, "etcd").Scan(&etcdConfig)
 	config.Get(defaultRootPath, "mysql").Scan(&mysqlConfig)
+	config.Get(defaultRootPath, "jwt").Scan(&jwtConfig)
+	config.Get(defaultRootPath, "redis").Scan(&redisConfig)
 
 	inited = true
 }
@@ -77,4 +80,12 @@ func GetMysqlConfig() (ret MysqlConfig) {
 
 func GetEtcdConfig() (ret EtcdConfig) {
 	return etcdConfig
+}
+
+func GetJwtConfig() (ret JwtConfig) {
+	return jwtConfig
+}
+
+func GetRedisConfig() (ret RedisConfig) {
+	return redisConfig
 }

@@ -2,8 +2,8 @@ package user
 
 import (
 	"github.com/micro/go-micro/util/log"
-	"user-srv/basic/db"
-	"user-srv/proto/user"
+	"microservice-in-micro/basic/db"
+	"microservice-in-micro/user-srv/proto/user"
 )
 
 func (u service) QueryUserByName(userName string) (ret *mu_micro_book_srv_user.User, err error) {

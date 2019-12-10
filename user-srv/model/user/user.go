@@ -3,7 +3,7 @@ package user
 import (
 	"fmt"
 	"sync"
-	"user-srv/proto/user"
+	"microservice-in-micro/user-srv/proto/user"
 )
 
 var (

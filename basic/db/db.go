@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"github.com/micro/go-micro/util/log"
 	"sync"
-	"user-srv/basic/config"
+	"microservice-in-micro/basic/config"
 )
 
 var (
@@ -34,5 +34,8 @@ func Init()  {
 }
 
 func GetDb() *sql.DB {
+	if mysqlDB == nil {
+		log.Fatal("[GetDb] mysqlDB 尚未初始化")
+	}
 	return mysqlDB
 }
